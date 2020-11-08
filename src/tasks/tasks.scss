@@ -1,0 +1,71 @@
+.container {
+    font-family: 'Poppins', sans-serif;
+
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        background-color: #F0F0EE;
+        min-height: 100vh;
+
+        .main {
+            width: 50%;
+            // border: 1px solid blue;
+            overflow: auto;
+
+            #Quote {
+                text-align: left;
+                font-style: italic;
+                color: #E54B1D;
+                font-size: 16px;
+            }
+
+            .task {
+                background-color: white;
+                border-radius: 4px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 30px 10px 30px;
+                margin: 10px 0 20px 0;
+
+                .tag {
+                    margin: 10px 0 5px 0;
+                    font-family: 'Poppins', sans-serif;
+
+                    .Writing, .Speaking {
+                        padding: 3px 8px 3px 8px;
+                        color: white;
+                        font-size: 11px;
+                        border-radius: 4px;
+                        margin: 0 0 -10px 0;
+                    }
+
+                    .Writing {
+                        background-color: green;
+                    }
+
+                    .Speaking {
+                        background-color: blue;
+                    }
+                }
+
+                .task-description {
+                    text-align: left;
+                    margin: 0
+                }
+
+                .response {
+                    width: 100%;
+
+                    textarea {
+                        width: 100%;
+                        min-height: 100px;
+                        font-family: 'Poppins', sans-serif;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+
+        }
+    }
+}
