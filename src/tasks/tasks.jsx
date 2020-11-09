@@ -1,86 +1,48 @@
 import React from 'react';
 import './tasks.scss';
-import { data } from '../data';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import axios from 'axios';
+import { API_URL } from '../apiConfig';
+import Task from './task/task.jsx'
+
 
 export default class Tasks extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            answer: "",
-            clickedID: 0
+            undoneTasks: [],
         }
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        
+        this.getUndoneTasks = this.getUndoneTasks.bind(this)
+    }
+
+    async getUndoneTasks(){
+        console.log('called undone func')
+        try {
+            const res = await axios.get(`${API_URL}/tasks/undone`)
+            this.setState({undoneTasks: res.data})
+        } catch (err){
+            console.error(err)
+        }
     }
 
     componentDidMount(){
         //get all undone tasks
+        this.getUndoneTasks()
     }
-
-    handleChange(e){
-        this.setState({
-            answer: e.target.value,
-        })
-    }
-
-    handleSubmit(e, id){
-        e.preventDefault()
-        console.log(this.state.answer)
-        //post to the task and then call function of getting all tasks again
-        data[id -1].response = this.state.answer
-        console.log('data', data)
-    }
-
-    markAsDone(){
-        //patch to update done status
-    }
+   
 
     render(){
-        console.log('data', data)
+        const { undoneTasks, openEdit } = this.state
+
+        for (let i = 0; i < undoneTasks.length; i++){
+            undoneTasks[i].openEdit = false
+        }
 
         return (
             <div className="container">
                 <div className="wrapper">
                     <div className="main">
-                        {data.map(each => 
-                            <div className="task" key={each.id}>
-                                {each.tag !== "Quote"
-                                ? <div className="tag">
-                                    <p className={each.tag}>{each.tag}</p>
-                                    <FontAwesomeIcon
-                                        icon = {faCheckSquare}
-                                        className="done-icon"
-                                        onClick = {() => this.markAsDone()}
-                                    />
-                                  </div>
-                                : null}
-                                <div className="task-description">
-                                    <p id={each.tag}>{each.content}</p>
-                                </div>
-                                {each.tag === "Writing"
-                                ? each.response.length === 0
-                                    ? <div className="response">
-                                        <textarea
-                                            type="text"
-                                            placeholder="Start typing..."
-                                            onChange={this.handleChange}
-                                        />
-                                        <button 
-                                            onClick={e => this.handleSubmit(e, each.id)}
-                                            className="submit-btn"
-                                        >Submit</button>
-                                    </div>
-                                    : <div className="response-result">
-                                        <p className="text">{each.response}</p>
-                                        <button className="edit-btn">Edit</button>
-                                      </div>
-                                : null}
-                            </div>
-                        )}
+                        {undoneTasks.map(each => <Task task={each} getUndoneTasks={this.getUndoneTasks}/>)}
                     </div>
                 </div>
             </div>
