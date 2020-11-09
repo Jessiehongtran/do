@@ -1,0 +1,40 @@
+.create {
+    width: 100%;
+    background-color: #F0F0EE;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 50%;
+        background-color: white;
+        padding: 40px;
+        max-height: 200px;
+        margin-top: 80px;
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        select {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80%;
+            min-height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            color: red;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    }
+}

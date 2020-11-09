@@ -22,7 +22,7 @@ export default class Task extends React.Component {
         try {
             const res = await axios.patch(`${API_URL}/tasks/${taskId}`, change)
             console.log(res.data)
-            this.props.getUndoneTasks()
+            this.props.getTasks()
         } catch (err){
             console.error(err)
         }
@@ -62,15 +62,20 @@ export default class Task extends React.Component {
                     {task.tag !== "Quote"
                     ? <div className="tag">
                         <p className={task.tag}>{task.tag}</p>
-                        <FontAwesomeIcon
+                        {!task.done
+                        ? <FontAwesomeIcon
                             icon = {faCheckSquare}
                             className="done-icon"
                             onClick = {() => this.markAsDone(task.id)}
                         />
+                        : null }
                         </div>
                     : null}
                     <div className="task-description">
-                        <p id={task.tag}>{task.content}</p>
+                        {task.tag === "Listening"
+                        ? <a href={task.content}>{task.content}</a>
+                        : <p id={task.tag}>{task.content}</p>
+                        }
                     </div>
                     {task.tag === "Writing"
                     ? task.response.length === 0 

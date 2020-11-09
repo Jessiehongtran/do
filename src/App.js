@@ -1,11 +1,26 @@
-import logo from './logo.svg';
+import { Route } from 'react-router-dom';
 import './App.css';
-import Do from './tasks/tasks'
+import UnDone from './tasks/undone/tasks';
+import Done from './tasks/done/tasks';
+import Nav from './nav/nav';
+import Create from './tasks/create/create';
 
 function App() {
   return (
     <div className="App">
-      <Do/>
+      <Nav />
+      <Route
+        exact path="/"
+        component={UnDone}
+      />
+      <Route
+        path="/archive"
+        component={Done}
+      />
+      <Route
+        path="/create"
+        component={Create}
+      />
     </div>
   );
 }

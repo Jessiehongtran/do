@@ -1,22 +1,21 @@
 import React from 'react';
-import './tasks.scss';
+import '../tasks.scss';
 import axios from 'axios';
-import { API_URL } from '../apiConfig';
-import Task from './task/task.jsx'
+import { API_URL } from '../../apiConfig';
+import Task from '../task/task.jsx'
 
 
-export default class Tasks extends React.Component {
+export default class UnDoneTasks extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             undoneTasks: [],
         }
 
-        this.getUndoneTasks = this.getUndoneTasks.bind(this)
+        this.getTasks = this.getTasks.bind(this)
     }
 
-    async getUndoneTasks(){
-        console.log('called undone func')
+    async getTasks(){
         try {
             const res = await axios.get(`${API_URL}/tasks/undone`)
             this.setState({undoneTasks: res.data})
@@ -27,22 +26,18 @@ export default class Tasks extends React.Component {
 
     componentDidMount(){
         //get all undone tasks
-        this.getUndoneTasks()
+        this.getTasks()
     }
    
 
     render(){
-        const { undoneTasks, openEdit } = this.state
-
-        for (let i = 0; i < undoneTasks.length; i++){
-            undoneTasks[i].openEdit = false
-        }
+        const { undoneTasks } = this.state
 
         return (
             <div className="container">
                 <div className="wrapper">
                     <div className="main">
-                        {undoneTasks.map(each => <Task task={each} getUndoneTasks={this.getUndoneTasks}/>)}
+                        {undoneTasks.map(each => <Task task={each} getTasks={this.getTasks}/>)}
                     </div>
                 </div>
             </div>
